@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-const Form = styled.form`
+const FormStyled = styled.form`
   display: flex;
   flex-direction: column;
   width: 400px;
@@ -49,4 +49,4 @@ const Form = styled.form`
   }
 `;
 
-export { Form };
+export { FormStyled };

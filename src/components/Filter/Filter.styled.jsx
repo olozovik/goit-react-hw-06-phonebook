@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-const Label = styled.label`
+const LabelStyled = styled.label`
   display: grid;
   grid-template-columns: 1fr;
   gap: 5px;
@@ -19,4 +19,4 @@ const Label = styled.label`
   }
 `;
 
-export { Label };
+export { LabelStyled };

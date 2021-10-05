@@ -1,20 +1,30 @@
 import { v4 as uuidv4 } from 'uuid';
 import PropTypes from 'prop-types';
-import { Label } from './Filter.styled';
+import { LabelStyled } from './Filter.styled';
+import { connect } from 'react-redux';
+import { changeFilter } from '../../redux/phonebook/phonebook-actions';
 
-function Filter({ inputValue, onChange }) {
+function Filter({ onChange }) {
   const inputId = uuidv4();
+
   return (
-    <Label htmlFor="inputId">
+    <LabelStyled htmlFor="inputId">
       Find contacts by name
-      <input id={inputId} type="text" value={inputValue} onChange={onChange} />
-    </Label>
+      <input
+        id={inputId}
+        type="text"
+        onChange={e => onChange(e.target.value)}
+      />
+    </LabelStyled>
   );
 }
 
 Filter.propTypes = {
-  inputValue: PropTypes.string,
   onChange: PropTypes.func,
 };
 
-export { Filter };
+const mapDispatchToProps = dispatch => ({
+  onChange: inputText => dispatch(changeFilter(inputText)),
+});
+
+export default connect(null, mapDispatchToProps)(Filter);

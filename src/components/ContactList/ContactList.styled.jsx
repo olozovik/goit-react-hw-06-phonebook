@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-const List = styled.ul`
+const ListStyled = styled.ul`
   display: grid;
   grid-template-columns: 1fr;
   gap: 5px;
@@ -28,4 +28,4 @@ const List = styled.ul`
   }
 `;
 
-export { List };
+export { ListStyled };
