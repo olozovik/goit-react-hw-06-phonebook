@@ -2,18 +2,7 @@ import { combineReducers } from 'redux';
 import { createReducer } from '@reduxjs/toolkit';
 import { addContact, changeFilter, deleteContact } from './phonebook-actions';
 
-const initialItems = [
-  {
-    id: '1',
-    name: 'Homer',
-    number: '12345',
-  },
-  {
-    id: '2',
-    name: 'March',
-    number: '12345',
-  },
-];
+const initialItems = [];
 
 const items = createReducer(initialItems, {
   [addContact]: (state, { payload }) => [...state, payload],
