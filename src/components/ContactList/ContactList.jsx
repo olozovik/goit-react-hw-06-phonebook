@@ -1,10 +1,14 @@
-import PropTypes from 'prop-types';
-import { ListStyled } from './ContactList.styled';
-import { connect } from 'react-redux';
-import { deleteContact } from '../../redux/phonebook/phonebook-actions';
 import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { ListStyled } from './ContactList.styled';
+import { deleteContact } from 'redux/phonebook/phonebook-actions';
+import { getContacts, getFilter } from 'redux/phonebook/phonebook-selectors';
 
-function ContactList({ contacts, deleteContact, filter }) {
+function ContactList() {
+  const contacts = useSelector(getContacts);
+  const filter = useSelector(getFilter);
+  const dispatch = useDispatch();
+
   const [contactsToRender, setContactsToRender] = useState(contacts);
   const [filterResult, setFilterResult] = useState('idle');
 
@@ -14,10 +18,13 @@ function ContactList({ contacts, deleteContact, filter }) {
         name.toLowerCase().includes(filter.toLowerCase()),
       ),
     );
+  }, [contacts, filter]);
+
+  useEffect(() => {
     if (!filter && contacts.length) setFilterResult('idle');
     if (!filter && !contacts.length) setFilterResult('no contacts');
-    if (filter && contacts.length) setFilterResult('not found');
-  }, [contacts, filter]);
+    if (filter && !contactsToRender.length) setFilterResult('not found');
+  }, [contacts.length, contactsToRender.length, filter]);
 
   return (
     <>
@@ -33,7 +40,7 @@ function ContactList({ contacts, deleteContact, filter }) {
               <button
                 type={'button'}
                 data-name={name}
-                onClick={() => deleteContact(name)}
+                onClick={() => dispatch(deleteContact(name))}
               >
                 Delete
               </button>
@@ -44,23 +51,5 @@ function ContactList({ contacts, deleteContact, filter }) {
     </>
   );
 }
-const mapStateToProps = state => ({
-  contacts: state.items,
-  filter: state.filter,
-});
 
-const mapDispatchToProps = dispatch => ({
-  deleteContact: name => dispatch(deleteContact(name)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(ContactList);
-
-ContactList.propTypes = {
-  contacts: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string,
-      name: PropTypes.string,
-      number: PropTypes.string,
-    }),
-  ),
-};
+export { ContactList };

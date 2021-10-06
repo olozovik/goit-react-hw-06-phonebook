@@ -1,12 +1,15 @@
 import { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
-import { FormStyled } from './ContactForm.styled';
-import { connect } from 'react-redux';
-import { addContact } from '../../redux/phonebook/phonebook-actions';
 import toast from 'react-hot-toast';
+import { useDispatch, useSelector } from 'react-redux';
+import { FormStyled } from './ContactForm.styled';
+import { addContact } from 'redux/phonebook/phonebook-actions';
+import { getContacts } from 'redux/phonebook/phonebook-selectors';
 
-const ContactForm = ({ contacts, addContact }) => {
+const ContactForm = () => {
+  const contacts = useSelector(getContacts);
+  const dispatch = useDispatch();
+
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
@@ -41,7 +44,7 @@ const ContactForm = ({ contacts, addContact }) => {
       return;
     }
 
-    addContact(name, number);
+    dispatch(addContact(name, number));
   };
 
   return (
@@ -77,21 +80,4 @@ const ContactForm = ({ contacts, addContact }) => {
   );
 };
 
-ContactForm.propTypes = {
-  onSubmit: PropTypes.func,
-  contacts: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string,
-      number: PropTypes.string,
-      id: PropTypes.string,
-    }),
-  ),
-};
-
-const mapStateToProps = state => ({ contacts: state.items });
-
-const mapDispatchToProps = dispatch => ({
-  addContact: (name, number) => dispatch(addContact(name, number)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(ContactForm);
+export { ContactForm };
