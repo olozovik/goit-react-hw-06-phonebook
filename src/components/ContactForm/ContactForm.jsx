@@ -35,7 +35,7 @@ const ContactForm = () => {
   const handleSubmit = e => {
     e.preventDefault();
 
-    const isContactExisting = contacts.find(
+    const isContactExisting = contacts.some(
       contact => contact.name.toLowerCase() === name.toLowerCase(),
     );
 

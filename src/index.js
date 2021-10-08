@@ -5,14 +5,13 @@ import { PersistGate } from 'redux-persist/integration/react';
 import 'modern-normalize/modern-normalize.css';
 import App from './App';
 import { persistor, store } from './redux/store';
+import './index.css';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <App />
-      </PersistGate>
-    </Provider>
-  </React.StrictMode>,
+  <Provider store={store}>
+    <PersistGate loading={null} persistor={persistor}>
+      <App />
+    </PersistGate>
+  </Provider>,
   document.getElementById('root'),
 );
